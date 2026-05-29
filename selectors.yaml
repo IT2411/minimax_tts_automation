@@ -1,0 +1,24 @@
+# Directories and file paths
+download_dir: "tts_outputs"
+upload_dir: "tts_inputs"
+csv_dir: "csv_data"
+
+# Browser & Run Options
+chrome_version: 148
+change_account: false
+
+# Target URL
+page_url: "https://minimax.io/audio/text-to-speech"
+
+# Selectors in ['type', 'value'] format
+text_input: ['xpath', "//div[@contenteditable='true']"]
+generate_button: ['xpath', "(//button[.//span[normalize-space()='Generate']])[1]"]
+download_button: ['xpath', "(//div[contains(@class, 'ant-dropdown-trigger')])[2]"]
+wav_format_option: ['xpath', "//li[contains(@class, 'ant-dropdown-menu-item') and contains(@data-menu-id, 'wav')]"]
+logout_indicator: ['xpath', "//h1[normalize-space()='Speech Synthesis']"]
+model_dropdown_button: ['xpath', "//p[normalize-space()='Model']"]
+
+# Voice Selection Selectors
+voice_modal_trigger: ['xpath', "(//section[contains(@class,'cursor-pointer') and contains(@class,'rounded-[12px]')])[1]"]
+my_voices_tab: ['xpath', "//div[@role='tab' or contains(@class, 'ant-tabs-tab')]//*[text()='My Voices'] | //*[text()='My Voices']"]
+modal_close_button: ['xpath', "(//div[contains(@class,'cursor-pointer') and contains(@class,'rounded-[4px]')])[1]"]
