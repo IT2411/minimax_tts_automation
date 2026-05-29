@@ -96,12 +96,12 @@ class SeleniumWebController:
                 print(f"Notice: Failed to load completed tracking file: {e}")
         return completed
 
-    def _log_completed_generation(self, filename, transcription, model):
+    def _log_completed_generation(self, filename, transcription, model, voice):
         """Appends a successfully generated audio run to the tracking CSV file."""
         file_exists = os.path.exists(self.completed_csv_path)
         try:
             with open(self.completed_csv_path, mode="a", encoding="utf-8", newline="") as file:
-                fieldnames = ["filename", "transcription", "model_used", "timestamp"]
+                fieldnames = ["filename", "transcription", "model_used", "voice_used", "timestamp"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 if not file_exists:
                     writer.writeheader()
@@ -109,6 +109,7 @@ class SeleniumWebController:
                     "filename": filename,
                     "transcription": transcription,
                     "model_used": model,
+                    "voice_used": voice,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 })
             self.completed_set.add(filename)
@@ -225,10 +226,7 @@ class SeleniumWebController:
         self.driver.get(url)
 
     def check_and_request_manual_login(self, check_locator):
-        """
-        Manages verification of the login session. 
-        If change_account is enabled in YAML, forces execution pause to allow switching profiles.
-        """
+        """Checks if the user is logged in. If not, pauses execution for manual login."""
         if self.change_account:
             print("\n" + "="*60)
             print("Notice: 'change_account' flag is active.")
@@ -565,7 +563,7 @@ class SeleniumWebController:
                     self.rename_file(temp_downloaded_name, target_filename)
                     
                     # Log successfully completed run to track state for pause/resume
-                    self._log_completed_generation(target_filename, transcription_text, model_name)
+                    self._log_completed_generation(target_filename, transcription_text, model_name, target_voice)
                     
                     # Small throttle delay between browser generations
                     time.sleep(2)

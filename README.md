@@ -103,3 +103,7 @@ If your internet drops, the script crashes, or you manually interrupt it (`Ctrl+
 - All successfully completed audio files are saved inside the `tts_outputs` folder.
 - Completed progress is logged in `csv_data/completed_runs.csv`.
 - Upon restarting (`python main.py`), the script automatically reads the log, skips all completed filenames, and resumes processing where it was halted.
+
+---
+
+**Note**: Will be adding support to use pre-existing or functionality to clone voice. Or headless if needed.
